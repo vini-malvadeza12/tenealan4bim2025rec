@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
 export default function Formulario() {
+
+  // Estado que armazena todos os campos do formulário
   const [formData, setFormData] = useState({
     nome: "",
     idade: "",
@@ -21,17 +23,27 @@ export default function Formulario() {
     senha: "",
   });
 
+  // Atualiza o estado sempre que o usuário digita em algum input
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value } = e.target; // pega atributo name e valor digitado
+    setFormData({ ...formData, [name]: value }); // atualiza apenas o campo alterado
   };
 
+  // Função executada ao enviar o formulário
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // evita que a página recarregue
+
+    // Chamada para API (no momento sem enviar os dados)
+    fetch('https://api.alanleiser.com/user')
+
+    // Exibe os dados no console
     console.log("Dados enviados:", formData);
+
+    // Mensagem de sucesso
     alert("Informações enviadas com sucesso!");
   };
 
+  // Estilos CSS em formato de objeto JavaScript
   const styles = {
     container: {
       maxWidth: "600px",
@@ -86,7 +98,10 @@ export default function Formulario() {
     <div style={styles.container}>
       <h2 style={styles.title}>Formulário de Informações</h2>
 
+      {/* Formulário */}
       <form onSubmit={handleSubmit}>
+
+        {/* Geração automática dos inputs */}
         {[
           ["nome", "Nome", "Digite seu nome"],
           ["idade", "Idade", "Digite sua idade"],
@@ -102,23 +117,27 @@ export default function Formulario() {
           ["habilidadeEspecial", "Habilidade especial", "Sua habilidade"],
           ["poderEspecial", "Poder especial", "Seu poder especial"],
           ["time", "Time que torce", "Digite o nome do seu time"],
-          ["versiculoBiblia", "Versiculo da Biblia", "Digite o seu versiculo favorito"],
+          ["versiculoBiblia", "Versiculo da Biblia", "Versiculo favorito"],
           ["email", "Email", "Digite o seu email"],
           ["senha", "Senha", "Digite a sua senha"],
         ].map(([key, label, placeholder]) => (
+          
+          // Cada campo do formulário
           <div key={key}>
             <label style={styles.label}>{label}:</label>
             <input
               type="text"
-              name={key}
+              name={key}             // usado para atualizar o estado corretamente
               placeholder={placeholder}
-              value={formData[key]}
+              value={formData[key]}  // valor vindo do estado
               onChange={handleChange}
               style={styles.input}
             />
           </div>
+
         ))}
 
+        {/* Botão de envio */}
         <button
           type="submit"
           style={styles.button}
